@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patients</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/patients.css') }}">
+    <!-- <style>
+        /* Basic table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                display: none;
+            }
+            tr {
+                margin-bottom: 10px;
+            }
+            td {
+                position: relative;
+                padding-left: 50%;
+            }
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 45%;
+                padding-left: 10px;
+                font-weight: bold;
+            }
+        }
+    </style> -->
+</head>
+<body>
+    <h1>Patients List</h1>
+    {% if patients %}
+    <table>
+        <thead>
+            <tr>
+                <th>Patient ID</th>
+                <th>Full Name</th>
+                <th>Contact Number</th>
+                <th>Insurance Info</th>
+                <th>Billing Address</th>
+                <th>Type</th>
+                <th>Service Name</th>
+                <th>Service Quantity</th>
+                <th>Service Cost</th>
+                <th>Medicine Name</th>
+                <th>Medicine Quantity</th>
+                <th>Medicine Cost</th>
+                <th>Room Number</th>
+                <th>Bed Number</th>
+                <th>Room Quantity</th>
+                <th>Room Cost</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+            <tr>
+                <td data-label="Patient ID">{{ patient.patient_id }}</td>
+                <td data-label="Full Name">{{ patient.full_name }}</td>
+                <td data-label="Contact Number">{{ patient.contact_number }}</td>
+                <td data-label="Insurance Info">{{ patient.insurance_info }}</td>
+                <td data-label="Billing Address">{{ patient.billing_address }}</td>
+                <td data-label="Type">{{ patient.patient_type }}</td>
+                <td data-label="Service Name">{{ patient.service_name }}</td>
+                <td data-label="Service Quantity">{{ patient.service_quantity }}</td>
+                <td data-label="Service Cost">{{ patient.service_cost }}</td>
+                <td data-label="Medicine Name">{{ patient.medicine_name }}</td>
+                <td data-label="Medicine Quantity">{{ patient.medicine_quantity }}</td>
+                <td data-label="Medicine Cost">{{ patient.medicine_cost }}</td>
+                <td data-label="Room Number">{{ patient.room_number }}</td>
+                <td data-label="Bed Number">{{ patient.bed_number }}</td>
+                <td data-label="Room Quantity">{{ patient.room_quantity }}</td>
+                <td data-label="Room Cost">{{ patient.room_cost }}</td>
+                <td>
+                    <!-- Form to send patient data to FMS -->
+                    <form action="{{ url_for('send_to_fms', patient_id=patient.patient_id) }}" method="post">
+                        <button type="submit">Send to Billing</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No patients found.</p>
+    {% endif %}
+</body>
+</html>
